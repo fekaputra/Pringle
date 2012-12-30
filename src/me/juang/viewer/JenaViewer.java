@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
@@ -20,15 +21,16 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import me.juang.model.JenaModel;
+import me.juang.controller.JenaController;
 import me.juang.model.JenaTreeNode;
 
 @SuppressWarnings("serial")
 public class JenaViewer extends JPanel implements TreeSelectionListener {
 	
-	private JenaModel jenaModel;
     private JEditorPane htmlPane;
     private JTree tree;
+    private JTable table;
+    private JenaTableModel tableModel;
     
     private static boolean DEBUG = false;
     private static boolean playWithLineStyle = false;
@@ -41,12 +43,11 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
 
     public JenaViewer() {
         super(new GridLayout(1,0));
-        
-        jenaModel = new JenaModel();
+
         instanceList = new Vector<JenaTreeNode>();
 
         //Create a tree that allows one selection at a time.
-        tree = new JTree(jenaModel.getTreeModel());
+        tree = new JTree(JenaController.model.getTreeModel());
         tree.getSelectionModel().setSelectionMode (TreeSelectionModel.SINGLE_TREE_SELECTION);
 
         //Listen for when the selection changes.
@@ -64,16 +65,21 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
         htmlPane = new JEditorPane();
         htmlPane.setEditable(false);
         JScrollPane htmlView = new JScrollPane(htmlPane);
+        
+        //Create the Jtable viewing pane
+        tableModel = new JenaTableModel();
+        table = new JTable(tableModel);
+        JScrollPane tableView = new JScrollPane(table);
 
         //Add the scroll panes to a split pane.
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setTopComponent(treeView);
-        splitPane.setBottomComponent(htmlView);
+        splitPane.setBottomComponent(tableView);
 
         Dimension minimumSize = new Dimension(200, 200);
         htmlView.setMinimumSize(minimumSize);
         treeView.setMinimumSize(minimumSize);
-        splitPane.setDividerLocation(100); 
+        splitPane.setDividerLocation(200); 
         splitPane.setPreferredSize(new Dimension(640, 480));
 
         //Add the split pane to this panel.
@@ -95,8 +101,10 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
     }
     
     public void displayInstances(JenaTreeNode node) {
+    	tableModel.changeConcept(node.getURI());
+    	
     	instanceList.clear();
-    	instanceList.addAll(jenaModel.getInstances(node.getURI()));
+    	instanceList.addAll(JenaController.model.getInstances(node.getURI()));
     	StringBuilder sb = new StringBuilder();
     	
     	for(Iterator<JenaTreeNode> i = instanceList.iterator(); i.hasNext(); ) {
@@ -104,25 +112,6 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
     	}
     	
     	htmlPane.setText(sb.toString());
-    	
-//    	if (node.) {
-//    		htmlPane.setText("- Not yet defined -");
-//    		return;
-//    	}
-//    	
-//    	StringBuilder sb = new StringBuilder();
-//    	
-//    	Iterator<? extends OntResource> ontClassIter = ((OntClass)((JenaTreeNode)oClass).getOntClass()).listInstances();
-//    	
-//    	while (ontClassIter.hasNext()) {
-//    		sb.append(ontClassIter.next().getLocalName()).append("\n");
-//    	}
-//    	
-//    	if(sb.toString().isEmpty()) {
-//    		htmlPane.setText("- empty -");
-//    	} else {
-//    		htmlPane.setText(sb.toString());
-//    	}
     }
         
     /**
@@ -130,7 +119,7 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
      * this method should be invoked from the
      * event dispatch thread.
      */
-    private static void createAndShowGUI() {
+    public static void createAndShowGUI() {
         if (useSystemLookAndFeel) {
             try {
                 UIManager.setLookAndFeel(
@@ -141,7 +130,7 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
         }
 
         //Create and set up the window.
-        JFrame frame = new JFrame("TreeDemo");
+        JFrame frame = new JFrame("Hola");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Add content to the window.
@@ -150,15 +139,5 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
     }
 }
