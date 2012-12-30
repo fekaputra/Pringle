@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1356733950669" name="http://www.owl-ontologies.com/Ontology1356335889.owl" uri="HW_Persons.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1356733950669" name="http://www.owl-ontologies.com/Ontology1356336272.owl" uri="Tester.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1356733950669" name="http://www.owl-ontologies.com/Ontology1356336344.owl" uri="HW_TestCases.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1356733950669" name="http://www.owl-ontologies.com/Ontology1356359329.owl" uri="Hello.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1356733950669" name="http://www.owl-ontologies.com/Ontology1356603937.owl" uri="hallo.owl"/>
+    </group>
+</catalog>
