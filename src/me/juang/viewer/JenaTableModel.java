@@ -27,19 +27,16 @@ public class JenaTableModel extends AbstractTableModel {
 		
 		@Override
 		public Object visitURI(Resource r, String uri) {
-			// TODO Auto-generated method stub
 			return r.getLocalName();
 		}
 		
 		@Override
 		public Object visitLiteral(Literal l) {
-			// TODO Auto-generated method stub
 			return l.getValue();
 		}
 		
 		@Override
 		public Object visitBlank(Resource r, AnonId id) {
-			// TODO Auto-generated method stub
 			return r.getLocalName();
 		}
 	};
@@ -143,5 +140,7 @@ public class JenaTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		return matriks[row][col];
 	}
+	
+	
 
 }

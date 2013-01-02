@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -156,6 +157,18 @@ public class JenaModel {
 		}
 		
 		return tempVec;
+	}
+	
+	public Map<String, OntProperty> getAllClassMapProps(OntClass pOntClass) {
+
+		Map<String, OntProperty> tempMap = new HashMap<String, OntProperty>();
+		
+		for(ExtendedIterator<OntProperty> i = pOntClass.listDeclaredProperties(); i.hasNext(); ) {
+			OntProperty temp = i.next();
+			tempMap.put(temp.getLocalName(), temp);
+		}
+		
+		return tempMap;
 	}
 	
 	public Individual getIndiFromURI(String URI) {

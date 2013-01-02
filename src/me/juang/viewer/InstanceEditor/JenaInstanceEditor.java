@@ -58,6 +58,8 @@ public class JenaInstanceEditor extends JPanel {
 		
 		panelObject = new JPanel();
 		panelObject.setPreferredSize(new Dimension(275,500));
+		panelObject.setMaximumSize(new Dimension(275,500));
+		panelObject.setMinimumSize(new Dimension(275,500));
 		panelObject.setBorder(BorderFactory.createLineBorder(Color.RED));
 		
 		panelDatatype = new JPanel();
@@ -76,8 +78,8 @@ public class JenaInstanceEditor extends JPanel {
 		for(Iterator<OntProperty> i = properties.iterator(); i.hasNext(); ) {
 			OntProperty tempProp = i.next();
 			if(tempProp.isObjectProperty()) {
-				if(!tempProp.isFunctionalProperty()) {
-					ListDemo cBox = new ListDemo(instance, tempProp);
+				if(!tempProp.isFunctionalProperty() && !tempProp.isInverseFunctionalProperty()) {
+					JenaMultiplePropertyEditor cBox = new JenaMultiplePropertyEditor(instance, tempProp);
 					objectList.add(cBox);
 					panelObject.add(cBox);
 				} else {

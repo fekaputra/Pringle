@@ -10,75 +10,77 @@
     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" > 
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#endDate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_9">
-    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
-    <responsible rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_5"/>
+    <participate rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_4"/>
+    <participate rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client_3"/>
     <participate rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client_2"/>
+    <responsible rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_5"/>
+    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_8">
-    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
-    <responsible rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_6"/>
-    <participate rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_5"/>
     <participate rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client_2"/>
+    <responsible rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_4"/>
+    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_7">
-    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
     <participate rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client_2"/>
+    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
+    <participate rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client_1"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#isResponsibleOf">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
-    <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#responsible"/>
-    <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#isParticipantOf"/>
-    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
     <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
+    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#isParticipantOf"/>
+    <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#responsible"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Person"/>
     <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client"/>
+    <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Person"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Client">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
     <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Person"/>
+    <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#startDate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_6">
     <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
-    <isResponsibleOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_8"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#isParticipantOf">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
-    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Person"/>
     <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#participate"/>
+    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Person"/>
+    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_5">
-    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
     <isResponsibleOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_9"/>
-    <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_8"/>
+    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#responsible">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
-    <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#isResponsibleOf"/>
     <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#participate"/>
+    <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#isResponsibleOf"/>
+    <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer_4">
+    <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_9"/>
     <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Engineer"/>
+    <isResponsibleOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_8"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Person">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
@@ -91,25 +93,27 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Client_1">
     <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client"/>
+    <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_7"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#hasEmail">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Person"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Client_3">
+    <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_9"/>
     <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#participate">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#isParticipantOf"/>
-    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Person"/>
     <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project"/>
+    <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Person"/>
+    <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#isParticipantOf"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1356854760.owl#Client_2">
-    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client"/>
-    <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_7"/>
-    <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_8"/>
     <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_9"/>
+    <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_8"/>
+    <isParticipantOf rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Project_7"/>
+    <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1356854760.owl#Client"/>
   </rdf:Description>
 </rdf:RDF>

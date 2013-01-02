@@ -67,7 +67,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /* ListDemo.java requires no other files. */
 @SuppressWarnings("serial")
-public class ListDemo extends JPanel
+public class JenaMultiplePropertyEditor extends JPanel
                       implements ListSelectionListener {
 	
 //	private Individual instance = JenaController.model.getIndiFromURI(JenaController.NS+"eng_one");
@@ -95,7 +95,7 @@ public class ListDemo extends JPanel
     private JButton fireButton;
     private JComboBox propertyName;
 
-    public ListDemo(Individual pInstance, OntProperty pOntProp) {
+    public JenaMultiplePropertyEditor(Individual pInstance, OntProperty pOntProp) {
         super(new BorderLayout());
         
         initProps(pInstance, pOntProp);
@@ -355,7 +355,7 @@ public class ListDemo extends JPanel
     	OntProperty ontProp = JenaController.model.getOntModel().getOntProperty(JenaController.NS+"isParticipantOf");
 
         //Create and set up the content pane.
-        JPanel newContentPane = new ListDemo(instance, ontProp);
+        JPanel newContentPane = new JenaMultiplePropertyEditor(instance, ontProp);
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 

@@ -2,6 +2,7 @@ package me.juang.viewer.InstanceEditor;
 
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -32,13 +33,12 @@ public class PanelComboBox extends JPanel {
 	public PanelComboBox(Individual pIndi, OntProperty pOntProp) {
 		super();
 		
-		mIndividual = pIndi;
-		mOntProperty = pOntProp;
-		mProperties = JenaController.model.getIndividualProps(pIndi.getURI(), pOntProp);
-		mComboBoxFeed = JenaController.model.getIndividualListFromPropertyRanges(mOntProperty.getURI());
+		setPanel(pIndi, pOntProp);
 	}
 	
 	public void setPanel(Individual pIndi, OntProperty pOntProp) {
+		setBorder(BorderFactory.createTitledBorder(pOntProp.getLocalName()));
+		
 		mIndividual = pIndi;
 		mOntProperty = pOntProp;
 		mProperties = JenaController.model.getIndividualProps(pIndi.getURI(), pOntProp);

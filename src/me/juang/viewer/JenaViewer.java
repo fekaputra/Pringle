@@ -7,10 +7,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Iterator;
 import java.util.Vector;
 
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,17 +25,20 @@ import javax.swing.tree.TreeSelectionModel;
 import me.juang.controller.JenaController;
 import me.juang.model.JenaTreeNode;
 import me.juang.viewer.InstanceEditor.JenaInstanceEditor;
+import me.juang.viewer.filter.JenaFilterComponent;
+
+import com.hp.hpl.jena.vocabulary.OWL;
 
 @SuppressWarnings("serial")
 public class JenaViewer extends JPanel implements TreeSelectionListener {
 	
-    private JEditorPane htmlPane;
+//    private JEditorPane htmlPane;
     private JTree tree;
-    private JTable table;
-    private JenaTableModel tableModel;
+//    private JTable table;
     private JTabbedPane tabbedPanel;
     private JenaInstanceEditor instanceEditor;
 //    private JenaRowEditor tableRowEditor;
+    private JenaFilterComponent tableFilter;
     
     private static boolean DEBUG = false;
     private static boolean playWithLineStyle = false;
@@ -69,19 +70,18 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
         JScrollPane treeView = new JScrollPane(tree);
 
         //Create the HTML viewing pane.
-        htmlPane = new JEditorPane();
-        htmlPane.setEditable(false);
+//        htmlPane = new JEditorPane();
+//        htmlPane.setEditable(false);
         
         //Create the Jtable viewing pane
-        tableModel = new JenaTableModel();
-        table = new JTable(tableModel);
-        table.addMouseListener(new MouseAdapter() {
+//        table = new JTable(JenaController.tableModel);
+        JenaController.table.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					JTable target = (JTable)e.getSource();
 					int row = target.getSelectedRow();
 					tabbedPanel.setSelectedIndex(1);
-					instanceEditor.initInstanceEditor(tableModel.getIndividualURI(row));
+					instanceEditor.initInstanceEditor(JenaController.tableModel.getIndividualURI(row));
 				}
 			}
 		});
@@ -108,22 +108,24 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
         
         instanceEditor = new JenaInstanceEditor();
         
-        JScrollPane tableView = new JScrollPane(table);
+        JScrollPane tableView = new JScrollPane(JenaController.table);
         tabbedPanel = new JTabbedPane();
         tabbedPanel.add("Instance Browser", tableView);
         tabbedPanel.add("Instance Editor", instanceEditor); // TODO: Change this panel into JenaTableModel
 
         Dimension minimumSize = new Dimension(200, 200);
-        JPanel newJ = new JPanel();
+        
+        tableFilter = new JenaFilterComponent(OWL.Thing.toString());
+        tableFilter.setMinimumSize(minimumSize);
+        
         
         //Add the scroll panes to a split pane.
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setTopComponent(treeView);
         splitPane.setBottomComponent(tabbedPanel);
-        JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane, newJ);
-//        htmlView.setMinimumSize(minimumSize);
+        JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane, tableFilter);
+
         treeView.setMinimumSize(minimumSize);
-        newJ.setMinimumSize(minimumSize);
         splitPane.setDividerLocation(200); 
         splitPane.setPreferredSize(new Dimension(824, 600));
         splitPane2.setDividerLocation(820); 
@@ -140,6 +142,7 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
 
         if (node == null) return;
 
+    	
         JenaTreeNode nodeInfo = (JenaTreeNode)node.getUserObject();
         displayInstances(nodeInfo);
         if (DEBUG) {
@@ -148,17 +151,20 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
     }
     
     public void displayInstances(JenaTreeNode node) {
-    	tableModel.changeConcept(node.getURI());
+    	tabbedPanel.setSelectedIndex(0);
+    	tableFilter.changeConcept(node.getURI());
+    	JenaController.tableModel.changeConcept(node.getURI());
     	
     	instanceList.clear();
     	instanceList.addAll(JenaController.model.getInstances(node.getURI()));
-    	StringBuilder sb = new StringBuilder();
     	
-    	for(Iterator<JenaTreeNode> i = instanceList.iterator(); i.hasNext(); ) {
-    		sb.append(i.next().toString()).append("\n");
-    	}
+//    	StringBuilder sb = new StringBuilder();
+//    	
+//    	for(Iterator<JenaTreeNode> i = instanceList.iterator(); i.hasNext(); ) {
+//    		sb.append(i.next().toString()).append("\n");
+//    	}
     	
-    	htmlPane.setText(sb.toString());
+//    	htmlPane.setText(sb.toString());
     }
         
     /**
@@ -187,5 +193,13 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
         frame.pack();
         frame.setVisible(true);
     }
+    
+	public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JenaViewer.createAndShowGUI();
+            }
+        });
+	}
     
 }
