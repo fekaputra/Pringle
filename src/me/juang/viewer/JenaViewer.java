@@ -5,6 +5,8 @@ package me.juang.viewer;
  */
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -13,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.UIManager;
@@ -23,6 +26,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import me.juang.controller.JenaController;
 import me.juang.model.JenaTreeNode;
+import me.juang.viewer.InstanceEditor.JenaInstanceEditor;
 
 @SuppressWarnings("serial")
 public class JenaViewer extends JPanel implements TreeSelectionListener {
@@ -31,6 +35,9 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
     private JTree tree;
     private JTable table;
     private JenaTableModel tableModel;
+    private JTabbedPane tabbedPanel;
+    private JenaInstanceEditor instanceEditor;
+//    private JenaRowEditor tableRowEditor;
     
     private static boolean DEBUG = false;
     private static boolean playWithLineStyle = false;
@@ -64,26 +71,66 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
         //Create the HTML viewing pane.
         htmlPane = new JEditorPane();
         htmlPane.setEditable(false);
-        JScrollPane htmlView = new JScrollPane(htmlPane);
         
         //Create the Jtable viewing pane
         tableModel = new JenaTableModel();
         table = new JTable(tableModel);
+        table.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					JTable target = (JTable)e.getSource();
+					int row = target.getSelectedRow();
+					tabbedPanel.setSelectedIndex(1);
+					instanceEditor.initInstanceEditor(tableModel.getIndividualURI(row));
+				}
+			}
+		});
+        
+        
+//        tableRowEditor = new JenaRowEditor(table);
+//        
+//        table.getModel().addTableModelListener(new TableModelListener() {
+//			
+//			@Override
+//			public void tableChanged(TableModelEvent e) {
+//				int col = e.getColumn();
+//				int row = e.getFirstRow();
+//				if(e.getType()==TableModelEvent.UPDATE && col>=0 && row>=0) {
+//					System.out.println(e.getColumn()+"+"+e.getFirstRow());
+//					JComboBox box = (JComboBox)tableModel.getValueAt(row, col);
+//					tableRowEditor.setEditorAt(e.getFirstRow(), new DefaultCellEditor(box));
+//					System.out.println(table.getColumnCount());
+//					String tString = tableModel.getColumnName(col);
+//					table.getColumn(tString).setCellEditor(tableRowEditor);
+//				}
+//			}
+//		});
+        
+        instanceEditor = new JenaInstanceEditor();
+        
         JScrollPane tableView = new JScrollPane(table);
+        tabbedPanel = new JTabbedPane();
+        tabbedPanel.add("Instance Browser", tableView);
+        tabbedPanel.add("Instance Editor", instanceEditor); // TODO: Change this panel into JenaTableModel
 
+        Dimension minimumSize = new Dimension(200, 200);
+        JPanel newJ = new JPanel();
+        
         //Add the scroll panes to a split pane.
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setTopComponent(treeView);
-        splitPane.setBottomComponent(tableView);
-
-        Dimension minimumSize = new Dimension(200, 200);
-        htmlView.setMinimumSize(minimumSize);
+        splitPane.setBottomComponent(tabbedPanel);
+        JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane, newJ);
+//        htmlView.setMinimumSize(minimumSize);
         treeView.setMinimumSize(minimumSize);
+        newJ.setMinimumSize(minimumSize);
         splitPane.setDividerLocation(200); 
-        splitPane.setPreferredSize(new Dimension(640, 480));
+        splitPane.setPreferredSize(new Dimension(824, 600));
+        splitPane2.setDividerLocation(820); 
+        splitPane2.setPreferredSize(new Dimension(1024, 600));
 
         //Add the split pane to this panel.
-        add(splitPane);
+        add(splitPane2);
     }
 
     /** Required by TreeSelectionListener interface. */
@@ -140,4 +187,5 @@ public class JenaViewer extends JPanel implements TreeSelectionListener {
         frame.pack();
         frame.setVisible(true);
     }
+    
 }

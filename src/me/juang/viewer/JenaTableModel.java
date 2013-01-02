@@ -17,7 +17,9 @@ import com.hp.hpl.jena.vocabulary.OWL;
 
 @SuppressWarnings("serial")
 public class JenaTableModel extends AbstractTableModel {
-	
+
+	int rowSize;
+	int columnSize;
 	private String conceptURI;
 	private Vector<OntProperty> columnsData; // property
 	private Vector<OntResource> rowsData; // individual
@@ -41,6 +43,7 @@ public class JenaTableModel extends AbstractTableModel {
 			return r.getLocalName();
 		}
 	};
+	Object[][] matriks;
 	
 	public JenaTableModel() {
 		conceptURI = "";
@@ -48,19 +51,81 @@ public class JenaTableModel extends AbstractTableModel {
 		rowsData = new Vector<OntResource>();
 	}
 	
+	public String getIndividualURI(int index) {
+		return rowsData.get(index).getURI();
+	}
+	
 	public void changeConcept(String URI) {
 		if(URI.equalsIgnoreCase(OWL.Thing.toString()) || URI.equalsIgnoreCase(conceptURI)) return;
 		
 		conceptURI = URI;
-		columnsData = JenaController.model.getAllClassProps(conceptURI);
-		rowsData = JenaController.model.getAllClassIndividual(conceptURI);
+		initMatriks();
 		
 		fireTableStructureChanged();
+	}
+	
+	private void initMatriks() {
+		
+		columnsData = JenaController.model.getAllClassProps(conceptURI);
+		rowsData = JenaController.model.getAllClassIndividual(conceptURI);
+		rowSize = rowsData.size();
+		columnSize = columnsData.size()+1;
+		matriks = new Object[rowSize][columnSize];
+		
+		// regular properties
+		for(int col=1;col<columnSize;col++) {
+			for(int row=0;row<rowSize;row++) {
+				OntResource individu = rowsData.get(row);
+				OntProperty property = columnsData.get(col-1); // first column belong to name
+				
+				Vector<RDFNode> tempVec = JenaController.model.getIndividualProps(individu.getURI(), property);
+				if(tempVec.size()==0) {
+					matriks[row][col] = "-Empty-";
+					
+				} else if (tempVec.size()==1) {
+					matriks[row][col] = tempVec.firstElement().visitWith(rv);
+					
+				} else {
+					matriks[row][col] = "-Multiple-";
+					
+//					JComboBox combo = new JComboBox();
+//					combo.addItem("-Multiple-");
+//					for(Iterator<RDFNode> i = tempVec.iterator(); i.hasNext(); ) {
+//						combo.addItem(i.next().visitWith(rv));
+//					}
+//					combo.addComponentListener(new ComponentAdapter() {
+//
+//			            @Override
+//			            public void componentShown(ComponentEvent e) {
+//			                final JComponent c = (JComponent) e.getSource();
+//			                SwingUtilities.invokeLater(new Runnable() {
+//
+//			                    @Override
+//			                    public void run() {
+//			                        c.requestFocus();
+//			                        System.out.println(c);
+//			                        if (c instanceof JComboBox) {
+//			                            System.out.println("a");
+//			                        }
+//			                    }
+//			                });
+//			            }
+//			        });
+//					matriks[row][col] = combo;
+//					fireTableCellUpdated(row, col);
+				}
+			}
+		}
+		
+		// name properties
+		for(int row=0;row<rowSize;row++) {
+			matriks[row][0] = rowsData.get(row).getLocalName();
+		}
 	}
 
 	@Override
 	public int getColumnCount() {
-		return columnsData.size()+1;
+		return columnSize;
 	}
 
 	@Override
@@ -71,31 +136,12 @@ public class JenaTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return rowsData.size();
+		return rowSize;
 	}
 
 	@Override
 	public Object getValueAt(int row, int col) {
-		
-		OntResource individu = rowsData.get(row);
-		if(col==0) return individu.getLocalName();
-		
-		OntProperty property = columnsData.get(col-1);
-		
-		Vector<RDFNode> tempVec = JenaController.model.getIndividualProps(individu.getURI(), property);
-		if(tempVec.size()==0) {
-			return "-Empty-";
-		} else if (tempVec.size()==1) {
-			return tempVec.firstElement().visitWith(rv); 
-		} else {
-			return "-Multiple-";
-//			JComboBox combo = new JComboBox();
-//			combo.addItem("-Multiple-");
-//			for(Iterator<RDFNode> i = tempVec.iterator(); i.hasNext(); ) {
-//				combo.addItem(i.next().visitWith(rv));
-//			}
-//			return combo;
-		}
+		return matriks[row][col];
 	}
 
 }
