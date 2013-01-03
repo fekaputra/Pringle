@@ -1,6 +1,5 @@
 package me.juang.viewer.InstanceEditor;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,27 +43,26 @@ public class JenaInstanceEditor extends JPanel {
 	
 	public void initInstanceEditor(String InstanceURI) {
 		objectList = new ArrayList<JPanel>();
-//		datatypeList = new ArrayList<JPanel>();
 		
 		instance = JenaController.model.getIndiFromURI(InstanceURI);
 		concept = JenaController.model.getClassFromIndi(instance);
 		properties = JenaController.model.getAllClassProps(concept);
 		
+		setBorder(BorderFactory.createTitledBorder("Instance: "+instance.getLocalName()));
+		
 		initGUIObjects();
 	}
 	
 	public void initGUI() {
-		setBorder(BorderFactory.createLineBorder(Color.GREEN));
-		
 		panelObject = new JPanel();
 		panelObject.setPreferredSize(new Dimension(275,500));
 		panelObject.setMaximumSize(new Dimension(275,500));
 		panelObject.setMinimumSize(new Dimension(275,500));
-		panelObject.setBorder(BorderFactory.createLineBorder(Color.RED));
+		panelObject.setBorder(BorderFactory.createTitledBorder("Object Properties"));
 		
 		panelDatatype = new JPanel();
 		panelDatatype.setPreferredSize(new Dimension(275,525));
-		panelDatatype.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+		panelDatatype.setBorder(BorderFactory.createTitledBorder("Datatype Properties"));
 		
 		JSplitPane jsplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelObject, panelDatatype);
 		add(jsplit);
@@ -80,6 +78,7 @@ public class JenaInstanceEditor extends JPanel {
 			if(tempProp.isObjectProperty()) {
 				if(!tempProp.isFunctionalProperty() && !tempProp.isInverseFunctionalProperty()) {
 					JenaMultiplePropertyEditor cBox = new JenaMultiplePropertyEditor(instance, tempProp);
+					cBox.setBorder(BorderFactory.createTitledBorder(tempProp.getLocalName()));
 					objectList.add(cBox);
 					panelObject.add(cBox);
 				} else {
